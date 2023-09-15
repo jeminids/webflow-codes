@@ -1,4 +1,3 @@
-<script>
 $(document).ready(function() {
 // Iterate through elements with data attributes
 $('[data-popup^="open-"]').each(function() {
@@ -13,4 +12,3 @@ $('[data-popup^="open-"]').each(function() {
     });
 });
 });
-</script>
