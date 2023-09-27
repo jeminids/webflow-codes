@@ -1,3 +1,5 @@
+$(document).ready(function () {
+
 var source_list = $('[data-client="source"]');
 var target_list = $('[data-client="target"]');
 
@@ -32,3 +34,4 @@ setInterval(function () {
 
 
 }, $('[data-time]').data("time"));
+}); 
