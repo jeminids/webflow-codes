@@ -1,5 +1,5 @@
 function sorting_prodcut() {
-var containers = $('[sort="list"]');
+var containers = $('[data-sort="list"]');
 
 containers.each(function () {
     var container = $(this);
