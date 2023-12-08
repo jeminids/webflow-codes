@@ -14,7 +14,6 @@ $(document).ready(function () {
     // custom checkbox selected state
     $('.w-checkbox').on('click', function () {
         if ($(this).children().eq(0).is(':checked')) {
-            console.log("hey")
             $(this).toggleClass('is-active');
         }
     });
