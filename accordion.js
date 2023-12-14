@@ -12,9 +12,13 @@ $(document).ready(function () {
     $("[accordion=header]").click(function () {
         var nextDetail = $(this).next("[accordion=detail]");
         var icon = $(this).children("[accordion=icon]");
-        var degree = nextDetail.is(":visible") ? 0 : 180;
-        
-        nextDetail.slideToggle();
-        rotateIcon(icon, degree);
+
+        $("[accordion=detail]").slideUp(); 
+        rotateIcon($("[accordion=icon]"), 0);
+
+        if (!nextDetail.is(":visible")) {
+            nextDetail.slideDown();
+            rotateIcon(icon, 180); 
+        }
     });
 });
