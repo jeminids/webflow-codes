@@ -11,7 +11,7 @@ $(document).ready(function () {
     $("[accordion=detail]").slideUp();
     $("[accordion=header]").click(function () {
         var nextDetail = $(this).next("[accordion=detail]");
-        var icon = $(this).children("[accordion=icon]");
+        var icon = $(this).find("[accordion=icon]");
 
         $("[accordion=detail]").slideUp(); 
         rotateIcon($("[accordion=icon]"), 0);
