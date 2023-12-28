@@ -1,28 +1,50 @@
-$(function () {
-    const copyButton = $("[share='copy']"), shareButton = $("[share='button']"), shareOption = $("[share='option']"), copyText = $("[share='copy-text']");
+const copyButton = $("[share='copy']");
+const shareButton = $("[share='button']");
+const shareOption = $("[share='option']");
+const copyText = $("[share='copy-text']");
 
-    function setShareLinks(url) {
-        $("[share='facebook']").attr('href', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
-        $("[share='x']").attr('href', `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`);
-        $("[share='linkedin']").attr('href', `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}`);
-    }
-
-    copyButton.click(() => {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url).then(() => {
+copyButton.click(function () {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl)
+        .then(() => {
+            console.log('Copying to clipboard was successful!');
             const originalText = copyText.text();
             copyText.text('Copied');
-            setTimeout(() => copyText.text(originalText), 1000);
-        }).catch(console.error);
-    });
 
-    shareButton.click(() => {
-        const url = window.location.href;
+            setTimeout(() => {
+                copyText.text(originalText);
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Could not copy: ', err);
+        });
+});
+
+shareOption.hide();
+shareButton.click(function () {
+    if (shareOption.is(":visible")) {
+        shareOption.hide();
+    } else {
+        const ogTitle = $('meta[property="og:title"]').attr('content');
+        const currentUrl = window.location.href;
+
         if (navigator.share) {
-            navigator.share({ url }).then(() => console.log('Successful share')).catch(console.log);
+            navigator.share({
+                url: currentUrl
+            })
+                .then(() => console.log('Successful share'))
+                .catch(error => console.log('Error sharing', error))
         } else {
-            setShareLinks(url);
-            shareOption.toggle();
+            const encodedUrl = encodeURIComponent(currentUrl);
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+            const xUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
+            const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}`;
+
+            $("[share='facebook']").attr('href', facebookUrl);
+            $("[share='x']").attr('href', xUrl);
+            $("[share='linkedin']").attr('href', linkedinUrl);
+
+            shareOption.show();
         }
-    });
+    }
 });
