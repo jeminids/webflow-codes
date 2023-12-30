@@ -3,23 +3,6 @@ const shareButton = $("[share='button']");
 const shareOption = $("[share='option']");
 const copyText = $("[share='copy-text']");
 
-copyButton.click(function () {
-    const currentUrl = window.location.href;
-    navigator.clipboard.writeText(currentUrl)
-        .then(() => {
-            console.log('Copying to clipboard was successful!');
-            const originalText = copyText.text();
-            copyText.text('Copied');
-
-            setTimeout(() => {
-                copyText.text(originalText);
-            }, 1000);
-        })
-        .catch(err => {
-            console.error('Could not copy: ', err);
-        });
-});
-
 shareOption.hide();
 shareButton.click(function () {
     if (shareOption.is(":visible")) {
@@ -40,6 +23,22 @@ shareButton.click(function () {
             const xUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
             const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}`;
 
+            copyButton.click(function () {
+                const currentUrl = window.location.href;
+                navigator.clipboard.writeText(currentUrl)
+                    .then(() => {
+                        console.log('Copying to clipboard was successful!');
+                        const originalText = copyText.text();
+                        copyText.text('Copied');
+
+                        setTimeout(() => {
+                            copyText.text(originalText);
+                        }, 1000);
+                    })
+                    .catch(err => {
+                        console.error('Could not copy: ', err);
+                    });
+            });
             $("[share='facebook']").attr('href', facebookUrl);
             $("[share='x']").attr('href', xUrl);
             $("[share='linkedin']").attr('href', linkedinUrl);
