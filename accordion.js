@@ -1,24 +1,11 @@
 $(document).ready(function () {
-    function rotateIcon(icon, degrees) {
-        icon.animate({ borderSpacing: degrees }, {
-            step: function (now, fx) {
-                $(this).css('transform', 'rotate(' + now + 'deg)');
-            },
-            duration: 'fast'
-        }, 'linear');
-    }
-
-    $("[accordion=detail]").slideUp();
-    $("[accordion=header]").click(function () {
-        var nextDetail = $(this).next("[accordion=detail]");
-        var icon = $(this).find("[accordion=icon]");
-
-        $("[accordion=detail]").slideUp(); 
-        rotateIcon($("[accordion=icon]"), 0);
-
-        if (!nextDetail.is(":visible")) {
-            nextDetail.slideDown();
-            rotateIcon(icon, 180); 
-        }
-    });
+    $('[accordion="item"]').each(function () {
+        var speed = $(this).attr('accordion-speed') || 300;     
+        $(this).find('[accordion="content"]').slideUp();    
+        $(this).find('[accordion="trigger"]').click(function() {
+            var $content = $(this).siblings('[accordion="content"]');
+            $('[accordion="content"]').not($content).slideUp(speed);
+            $content.stop(true, true).slideToggle(speed);
+        });
+    });    
 });
