@@ -1,49 +1,37 @@
-const copyButton = $("[share='copy']");
-const shareButton = $("[share='button']");
-const shareOption = $("[share='option']");
-const copyText = $("[share='copy-text']");
+$(function () {
+    const currentUrl = window.location.href;
+    const encodedUrl = encodeURIComponent(currentUrl);
 
-shareOption.hide();
-shareButton.click(function () {
-    if (shareOption.is(":visible")) {
-        shareOption.hide();
-    } else {
-        const ogTitle = $('meta[property="og:title"]').attr('content');
-        const currentUrl = window.location.href;
+    // Hide share options initially
+    $('[share-option]').addClass('is-hidden');
 
+    // Handle share trigger
+    $('[share]').on('click', function () {
         if (navigator.share) {
-            navigator.share({
-                url: currentUrl
-            })
-                .then(() => console.log('Successful share'))
-                .catch(error => console.log('Error sharing', error))
+            navigator.share({ url: currentUrl })
+                .then(() => console.log('Successfully shared'))
+                .catch(error => console.log('Error sharing:', error));
         } else {
-            const encodedUrl = encodeURIComponent(currentUrl);
-            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-            const xUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
-            const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}`;
-
-            copyButton.click(function () {
-                const currentUrl = window.location.href;
-                navigator.clipboard.writeText(currentUrl)
-                    .then(() => {
-                        console.log('Copying to clipboard was successful!');
-                        const originalText = copyText.text();
-                        copyText.text('Copied');
-
-                        setTimeout(() => {
-                            copyText.text(originalText);
-                        }, 1000);
-                    })
-                    .catch(err => {
-                        console.error('Could not copy: ', err);
-                    });
-            });
-            $("[share='facebook']").attr('href', facebookUrl);
-            $("[share='x']").attr('href', xUrl);
-            $("[share='linkedin']").attr('href', linkedinUrl);
-
-            shareOption.show();
+            console.log('Web Share API not supported in this browser.');
+            $('[share-option]').removeClass('is-hidden');
         }
-    }
+    });
+
+    // Copy URL to clipboard
+    $('[share-copy]').on('click', function () {
+        navigator.clipboard.writeText(currentUrl)
+            .then(() => {
+                console.log('Copying to clipboard was successful!');
+                const $copyText = $('[share-copy-text]');
+                const originalText = $copyText.text();
+                $copyText.text('Copied');
+                setTimeout(() => $copyText.text(originalText), 1000);
+            })
+            .catch(err => console.error('Could not copy: ', err));
+    });
+
+    // Set social share URLs
+    $('[share-facebook]').attr('href', `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`);
+    $('[share-twitter]').attr('href', `https://twitter.com/intent/tweet?url=${encodedUrl}`);
+    $('[share-linkedin]').attr('href', `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}`);
 });
