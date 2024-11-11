@@ -1,4 +1,4 @@
-// not-published v1.0
+// not-published v1.1
 $(window).on('scroll', function() {
     var $splitScreen = $('[split-screen]');
     var scrollTop = $(window).scrollTop();
@@ -6,8 +6,8 @@ $(window).on('scroll', function() {
     var documentHeight = $(document).height();
     var scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
 
-    // Get the value of the split-screen attribute
-    var scrollEnd = parseFloat($splitScreen.attr('split-screen'));
+    
+    var scrollEnd = parseFloat($splitScreen.attr('split-screen')) || 10;
 
     if (!isNaN(scrollEnd) && scrollPercent >= scrollEnd) {
         $splitScreen.css('clip-path', 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%, 0% 100%, 100% 100%, 100% 100%, 0% 100%)');
