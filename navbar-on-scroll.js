@@ -9,12 +9,13 @@ $(document).ready(function () {
 
             if (scrollTop <= 32) {
                 $('[navbar]').removeClass('is-hidden');
+                $('[navbar]').removeClass('is-scroll-up');
             } else if (scrollTop > lastScrollTop) {
                 $('[navbar]').addClass('is-hidden');
             } else {
                 $('[navbar]').removeClass('is-hidden');
+                $('[navbar]').addClass('is-scroll-up');
             }
-
             lastScrollTop = scrollTop;
         });
     }
@@ -22,7 +23,6 @@ $(document).ready(function () {
     function runBasedOnNavbarValue() {
         var navbarValue = $('[navbar]').attr('navbar');
         var screenWidth = $(window).outerWidth();
-
         if (!navbarValue) {
             navbarScroll();
         } else if (navbarValue === "1" && screenWidth >= 991) {
