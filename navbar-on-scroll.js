@@ -1,3 +1,4 @@
+// v1.2
 $(document).ready(function () {
     function navbarScroll() {
         var navbarHeight = $('[navbar]').outerHeight();
