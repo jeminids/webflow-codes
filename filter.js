@@ -1,4 +1,6 @@
-// not-published v1.0
+// v1.1
+
+// v1.1
 
 var Webflow = Webflow || [];
 Webflow.push(function () {
@@ -23,7 +25,7 @@ Webflow.push(function () {
         $('[filter-button]').removeClass('is-active');
         $(this).addClass('is-active');
 
-        const filterItems = $('[filter-text-list]');
+        const filterItems = $('[filter_item-list]');
         const noResult = $('[filter_no-result]');
 
         if (selectedText === 'All') {
