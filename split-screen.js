@@ -1,4 +1,4 @@
-// not-published v1.1
+// v1.2
 $(window).on('scroll', function() {
     var $splitScreen = $('[split-screen]');
     var scrollTop = $(window).scrollTop();
