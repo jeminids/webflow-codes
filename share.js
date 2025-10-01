@@ -22,7 +22,7 @@ $(function () {
         navigator.clipboard.writeText(currentUrl)
             .then(() => {
                 console.log('Copying to clipboard was successful!');
-                const $copyText = $('[share-copy-text]');
+                const $copyText = $(this).find('[share-copy-text]');
                 const originalText = $copyText.text();
                 $copyText.text('Copied');
                 setTimeout(() => $copyText.text(originalText), 1000);
